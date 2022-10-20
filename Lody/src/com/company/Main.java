@@ -22,29 +22,23 @@ public class Main {
         static void permutacje(int i) {
             pieknaOdpowiedz = "";
             int naPoczatek = 0;
-            int ostatnie = 0;
             int sum = 0;
-            String rozw = "";
             String odp = "";
             if (i == N)
             {
                 for (int j = 0; j < N-1; j++)
                 {
-                    ostatnie = L[j+1]+1;
                     naPoczatek = tab[L[j+1]-1][L[0]-1];
                     sum+=tab[L[j]-1][L[j+1]-1];
                 }
-                sum+=naPoczatek;
-                if(sum<=najPer)
+                for(int j = 0; j < N; j++)
                 {
-                    for (int j = 0; j < N-1; j++)
-                    {
-                        int x = tab[L[j]-1][L[j+1]-1];
-                        rozw += String.valueOf(x)+", ";
-                        odp += String.valueOf(L[j])+", ";
-                    }
-                    odp+= String.valueOf(L[0]);
-                    rozw+=naPoczatek;
+                    odp+=L[j]+", ";
+                }
+                odp+= L[0];
+                sum+=naPoczatek;
+                if(sum<najPer)
+                {
                     najPer=sum;
                     najKol = odp;
                 }
