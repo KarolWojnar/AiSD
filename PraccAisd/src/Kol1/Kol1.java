@@ -14,7 +14,6 @@ public class Kol1 {
         final double grupa = 100000;
         int dzien = 1;
         int pierwszyDzien = 10;
-        double szybkoscZarazen = 0.5;
         double liczbaZarazonych = 0;
         int[]tab = new int[120];
         tab[1] = pierwszyDzien;
@@ -24,7 +23,7 @@ public class Kol1 {
             System.out.print(", [ ");
             System.out.print(tab[dzien]);
             dzien++;
-            liczbaZarazonych = tab[dzien - 1] * szybkoscZarazen + tab[dzien - 1];
+            liczbaZarazonych = tab[dzien - 1] + tab[dzien - 1];
             if(dzien >= 7) liczbaZarazonych -= tab[dzien - 7];
             tab[dzien] = (int) liczbaZarazonych;
             System.out.print(" ]\t");
