@@ -4,47 +4,47 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 public class HashSetSet {
-    private HashSet<Integer> hsSet;
+    private HashSet<Person> hsSet;
 
     public HashSetSet() {
-        hsSet = new HashSet<Integer>();
+        hsSet = new HashSet<Person>();
     }
 
-    public HashSet<Integer> getHsSet() {
+    public HashSet<Person> getHsSet() {
         return hsSet;
     }
     public int size()
     {
         return hsSet.size();
     }
-    public void insert(int elem)
+    public void insert(Person elem)
     {
-        if(!member(elem)) hsSet.add(new Integer(elem));
+        if(!member(elem)) hsSet.add(elem);
     }
-    public boolean member(int elem)
+    public boolean member(Person elem)
     {
-        return hsSet.contains(new Integer(elem));
+        return hsSet.contains(elem);
     }
-    public boolean delete(int elem)
+    public boolean delete(Person elem)
     {
         if(member(elem)) {
-            return hsSet.remove(new Integer(elem));
+            return hsSet.remove(elem);
         }
         return false;
     }
     public HashSetSet union(HashSetSet secondSet)
     {
         HashSetSet summarySet = new HashSetSet();
-        Iterator<Integer> iterator = hsSet.iterator();
+        Iterator<Person> iterator = hsSet.iterator();
         while(iterator.hasNext())
         {
-            int tempSet = iterator.next().intValue();
+            Person tempSet = iterator.next();
             summarySet.insert(tempSet);
         }
-        Iterator<Integer> secIter = secondSet.getHsSet().iterator();
+        Iterator<Person> secIter = hsSet.iterator();
         while(secIter.hasNext())
         {
-            int temp = secIter.next();
+            Person temp = secIter.next();
             summarySet.insert(temp);
         }
         return summarySet;
@@ -52,10 +52,10 @@ public class HashSetSet {
     public HashSetSet intersection(HashSetSet secSet)
     {
         HashSetSet intersectionSet = new HashSetSet();
-        Iterator<Integer> iterator = hsSet.iterator();
+        Iterator<Person> iterator = hsSet.iterator();
         while(iterator.hasNext())
         {
-            int temp = iterator.next().intValue();
+            Person temp = iterator.next();
             if(secSet.member(temp)) intersectionSet.insert(temp);
         }
         return intersectionSet;
@@ -63,50 +63,97 @@ public class HashSetSet {
     public HashSetSet difference(HashSetSet secSet)
     {
         HashSetSet differenceSet = new HashSetSet();
-        Iterator<Integer> iterator = hsSet.iterator();
+        Iterator<Person> iterator = hsSet.iterator();
         while(iterator.hasNext())
         {
-            int temp = iterator.next();
+            Person temp = iterator.next();
             if(!secSet.member(temp)) differenceSet.insert(temp);
         }
         return differenceSet;
     }
     public void print()
     {
-        Iterator<Integer> iterator = hsSet.iterator();
+        Iterator<Person> iterator = hsSet.iterator();
         while(iterator.hasNext())
         {
-            int temp = iterator.next();
-            System.out.print(temp + " ");
+            Person temp = iterator.next();
+            System.out.println(temp + " ");
         }
-        System.out.println();
     }
 
     public static void main(String[] args) {
         HashSetSet hsSet = new HashSetSet();
-        hsSet.insert(6);
-        hsSet.insert(63);
-        hsSet.insert(62);
-        hsSet.insert(123);
-        hsSet.insert(11);
-        hsSet.insert(41);
-        hsSet.insert(13);
-        hsSet.insert(77);
-        hsSet.insert(45);
-        hsSet.print();
+        hsSet.insert(new Person("Jan", "Matejko", 44));
+        hsSet.insert(new Person("Jan", "Kolwaski", 55));
+        hsSet.insert(new Person("Kamil", "Kowaslski", 51));
+        hsSet.insert(new Person("Adam", "Małysz", 33));
+        hsSet.insert(new Person("Wojciech", "Wojcik", 31));
+        hsSet.insert(new Person("Wiktoria", "Nowak", 35));
         HashSetSet hsSet2 = new HashSetSet();
-        hsSet2.insert(6);
-        hsSet2.insert(63);
-        hsSet2.insert(9);
-        hsSet2.insert(33);
-        hsSet2.insert(12);
-        hsSet2.insert(41);
-        hsSet2.insert(99);
-        hsSet2.insert(65);
-        hsSet2.insert(45);
-        hsSet2.print();
+        hsSet2.insert(new Person("Kamil", "Matejko", 44));
+        hsSet2.insert(new Person("Jan", "Matejko", 44));
+        hsSet2.insert(new Person("Kamil", "Kowaslski", 51));
+        hsSet2.insert(new Person("Wojciech", "Małysz", 33));
+        hsSet2.insert(new Person("Wiktoria", "Wojcik", 31));
+        hsSet2.insert(new Person("Wojciech", "Wojcik", 31));
+        hsSet2.insert(new Person("Wiktoria", "Nowak", 35));
         hsSet.difference(hsSet2).print();
-        hsSet.intersection(hsSet2).print();
-        hsSet.union(hsSet2).print();
     }
 }
+
+class Person implements Comparable<Person> {
+
+    private String imie, nazwisko;
+    private int wiek;
+
+    Person(String imie, String nazwisko, int wiek) {
+        this.imie = imie;
+        this.nazwisko = nazwisko;
+        this.wiek = wiek;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "imie='" + imie + '\'' +
+                ", nazwisko='" + nazwisko + '\'' +
+                ", wiek=" + wiek +
+                '}';
+    }
+
+    public int compareTo(Person o) {
+        //wiek
+        //imie
+        //nazwisko
+        if(o.getWiek() < this.getWiek()) return 1;
+        else if(o.getWiek() > this.getWiek()) return -1;
+        else if(o.getWiek() == this.getWiek() && !o.getImie().equals(this.getImie())) return o.getImie().compareTo(this.getImie());
+        else if(o.getWiek() == this.getWiek() && o.getImie().equals(this.getImie())) return o.getNazwisko().compareTo(this.getNazwisko());
+        return 0;
+    }
+
+    public int getWiek() {
+        return wiek;
+    }
+
+    public void setWiek(int wiek) {
+        this.wiek = wiek;
+    }
+
+    public String getImie() {
+        return imie;
+    }
+
+    public void setImie(String imie) {
+        this.imie = imie;
+    }
+
+    public String getNazwisko() {
+        return nazwisko;
+    }
+
+    public void setNazwisko(String nazwisko) {
+        this.nazwisko = nazwisko;
+    }
+}
+

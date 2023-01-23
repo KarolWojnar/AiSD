@@ -4,12 +4,12 @@ import java.util.Iterator;
 import java.util.TreeSet;
 
 public class TreeSetSet {
-    private TreeSet<Integer> tSet;
+    private TreeSet<Person> tSet;
     TreeSetSet()
     {
-        tSet = new TreeSet<Integer>();
+        tSet = new TreeSet<Person>();
     }
-    public TreeSet<Integer> gettSet()
+    public TreeSet<Person> gettSet()
     {
         return tSet;
     }
@@ -17,14 +17,14 @@ public class TreeSetSet {
     {
         return tSet.size();
     }
-    public boolean member(int elem){
-        return tSet.contains(new Integer(elem));
+    public boolean member(Person elem){
+        return tSet.contains(elem);
     }
-    public void insert(Integer p)
+    public void insert(Person p)
     {
         if(!member(p)) tSet.add(p);
     }
-    public boolean delete(Integer p)
+    public boolean delete(Person p)
     {
         if(member(p)) {tSet.remove(p); return true;}
         return false;
@@ -32,16 +32,16 @@ public class TreeSetSet {
     public TreeSetSet union(TreeSetSet secondSet)//oblicza sumę zbioru bierzącego ze zbirem z parametru metody
     {
         TreeSetSet unionSet = new TreeSetSet();//deklaracja nowa
-        Iterator<Integer> iterator = tSet.iterator();//do iteratora se przypisuje wartosci z drzewa
+        Iterator<Person> iterator = tSet.iterator();//do iteratora se przypisuje wartosci z drzewa
         while(iterator.hasNext())//dopuki w iteratorze są kolejne wartości(przechodzi po całym drzewie)
         {
-            Integer tempElem = iterator.next();//tworze chwilowy obiekt z następną osobą
+            Person tempElem = iterator.next();//tworze chwilowy obiekt z następną osobą
             unionSet.insert(tempElem);//wrzucam go do naszego uniona
         }
-        Iterator<Integer> iteratorS = secondSet.gettSet().iterator();//kolejne drzewko ale teraz wartosci z drzewa które podajemy
+        Iterator<Person> iteratorS = secondSet.gettSet().iterator();//kolejne drzewko ale teraz wartosci z drzewa które podajemy
         while(iteratorS.hasNext())//dopuki ma cos kolejnego
         {
-            Integer tempElem = iteratorS.next();//wstaw
+            Person tempElem = iteratorS.next();//wstaw
             unionSet.insert(tempElem);//wstaw do uniona
         }
         return unionSet;//zwraca wszystkie elementy z obu drzew
@@ -49,10 +49,10 @@ public class TreeSetSet {
     public TreeSetSet insertSection(TreeSetSet secondSet)//zwróci wartosci które się pokrywają w obu drzewach
     {
         TreeSetSet insertSet = new TreeSetSet();
-        Iterator<Integer> iterator = tSet.iterator();
+        Iterator<Person> iterator = tSet.iterator();
         while(iterator.hasNext())
         {
-            Integer tempElem = iterator.next();
+            Person tempElem = iterator.next();
             if(secondSet.member(tempElem)) insertSet.insert(tempElem);
         }
         return insertSet;
@@ -60,44 +60,86 @@ public class TreeSetSet {
     public TreeSetSet diferenceSection(TreeSetSet secondSet)
     {
         TreeSetSet diferentSet = new TreeSetSet();
-        Iterator<Integer> iterator = tSet.iterator();
+        Iterator<Person> iterator = tSet.iterator();
         while(iterator.hasNext())
         {
-            Integer tempPerson = iterator.next();
+            Person tempPerson = iterator.next();
             if(!secondSet.member(tempPerson)) diferentSet.insert(tempPerson);
         }
         return diferentSet;
     }
     public void print()
     {
-        Iterator<Integer> iterator = tSet.iterator();
+        Iterator<Person> iterator = tSet.iterator();
         while(iterator.hasNext())
         {
-            System.out.print(iterator.next() + "\t");
+            System.out.println(iterator.next());
         }
-        System.out.println();
     }
 
     public static void main(String[] args) {
         TreeSetSet tsSet = new TreeSetSet();
-        tsSet.insert(2);
-        tsSet.insert(11);
-        tsSet.insert(11);
-        tsSet.insert(33);
-        tsSet.insert(44);
-
-        TreeSetSet tsSet2 = new TreeSetSet();
-        tsSet2.insert(21);
-        tsSet2.insert(111);
-        tsSet2.insert(11);
-        tsSet2.insert(333);
-        tsSet2.insert(44);
-        tsSet.diferenceSection(tsSet2).print();
-        System.out.println("^roznia");
-        tsSet.insertSection(tsSet2).print();
-        System.out.println("^iloczyn");
-        tsSet.union(tsSet2).print();
-        System.out.println("^wszytskie");
+        tsSet.insert(new Person("Jan", "Kolwaski", 55));
+        tsSet.insert(new Person("Kamil", "Kowaslski", 51));
+        tsSet.insert(new Person("Adam", "Małysz", 33));
+        tsSet.insert(new Person("Wojciech", "Wojcik", 31));
+        tsSet.insert(new Person("Wiktoria", "Nowak", 35));
+        tsSet.print();
     }
 }
+class Person implements Comparable<Person> {
 
+    private String imie, nazwisko;
+    private int wiek;
+
+    Person(String imie, String nazwisko, int wiek) {
+        this.imie = imie;
+        this.nazwisko = nazwisko;
+        this.wiek = wiek;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "imie='" + imie + '\'' +
+                ", nazwisko='" + nazwisko + '\'' +
+                ", wiek=" + wiek +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        //wiek
+        //imie
+        //nazwisko
+        if(o.getWiek() < this.getWiek()) return 1;
+        else if(o.getWiek() > this.getWiek()) return -1;
+        else if(o.getWiek() == this.getWiek() && !o.getImie().equals(this.getImie())) return o.getImie().compareTo(this.getImie());
+        else if(o.getWiek() == this.getWiek() && o.getImie().equals(this.getImie())) return o.getNazwisko().compareTo(this.getNazwisko());
+        return 0;
+    }
+
+    public int getWiek() {
+        return wiek;
+    }
+
+    public void setWiek(int wiek) {
+        this.wiek = wiek;
+    }
+
+    public String getImie() {
+        return imie;
+    }
+
+    public void setImie(String imie) {
+        this.imie = imie;
+    }
+
+    public String getNazwisko() {
+        return nazwisko;
+    }
+
+    public void setNazwisko(String nazwisko) {
+        this.nazwisko = nazwisko;
+    }
+}
