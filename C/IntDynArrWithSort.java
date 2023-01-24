@@ -109,29 +109,7 @@ public class IntDynArrWithSort {
             System.out.println();
         }
     }
-    public void quickSort(int left, int right)//szybkie sortowanie
-    {
-        if(left < right)
-        {
-            int pivot = tab[left];
-            int s = left;
-            for(int i = left + 1; i <= right; i++)
-            {
-                if(tab[i] < pivot)
-                {
-                    swap(++s, i);
-                }
-            }
-            swap(left, s);
-            for(int i = 0; i < nElems; i++)
-            {
-                System.out.print(tab[i] + " ");
-            }
-            System.out.println();
-            quickSort(left, s - 1);
-            quickSort(s + 1, right);
-        }
-    }
+
     private void merge(int left,int mid,int right) //łącz fragment od l do mid z fragmentem od mid+1 do r
     {
         int [] tab1 = new int[right-left+1]; //Tworz tablice pomocnicza
