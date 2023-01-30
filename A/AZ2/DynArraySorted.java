@@ -40,9 +40,7 @@ public class DynArraySorted {
     {
         for(int i = 0; i < nElems; i++)
         {
-            if(table[i].getImie().equals(p.getImie())
-                    && table[i].getNazwisko().equals(p.getNazwisko())
-                    && table[i].getWiek() == p.getWiek()) return table[i];
+            if(table[i].compareTo(p) == 0) return table[i];
         }
         return null;
     }
@@ -51,9 +49,7 @@ public class DynArraySorted {
         int i;
         for(i = 0; i < nElems; i++)
         {
-            if(table[i].getImie().equals(p.getImie())
-                    && table[i].getNazwisko().equals(p.getNazwisko())
-                    && table[i].getWiek() == p.getWiek()) break;
+            if(table[i].compareTo(p) == 0) break;
         }
         if(i == (nElems - 1)){
             table[nElems] = null;
