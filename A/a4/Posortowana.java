@@ -1,5 +1,3 @@
-package repreprep.a4;
-
 public class Posortowana {
     public ListElem first;
     Posortowana()
