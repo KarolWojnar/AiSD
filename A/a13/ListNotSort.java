@@ -1,5 +1,3 @@
-package areprep.a13;
-
 import java.util.Calendar;
 import java.util.List;
 
