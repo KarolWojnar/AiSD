@@ -1,70 +1,55 @@
-package AZ6;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-public class IHashTable {
-    private LinkedList[] hashArray;
-    private int arraySize;
-    IHashTable(int size)
+public class HashArray {
+    public LinkedList[] hashArray;
+    public int size;
+    HashArray(int maxSize)
     {
-        arraySize = size;
-        hashArray = new LinkedList[size];
+        hashArray = new LinkedList[maxSize];
+        size = maxSize;
         for(int i = 0; i < size; i++)
         {
             hashArray[i] = new LinkedList();
         }
     }
-    public LinkedList getLinkedList(int index)
-    {
-        return hashArray[index];
-    }
     public int size()
     {
-        return arraySize;
+        return size;
     }
-    private int hashFunct(int x)
+    public int hashFunct(int x)
     {
-        return x % arraySize;
+        return x % size;
     }
-    public void insert(int elem)
+    public void insert(int x)
     {
-        int after = hashFunct(elem);
-        if(!hashArray[after].contains(elem)) hashArray[after].addFirst(elem);
+        int add = hashFunct(x);
+        if(!hashArray[add].contains(x)) hashArray[add].addFirst(x);
     }
     public void delete(int elem)
     {
-        int find = hashFunct(elem);
-        if(hashArray[find].contains(elem)) hashArray[find].remove((Object)elem);
+        int del = hashFunct(elem);
+        if(hashArray[del].contains(elem)) hashArray[del].remove((Object)elem);
     }
     public boolean find(int elem)
     {
-        int hashVal = hashFunct(elem);
-        return hashArray[hashVal].contains(elem);
+        return hashArray[hashFunct(elem)].contains(elem);
     }
     public void print()
     {
-        System.out.println("Tablica mieszająca: ");
-        for(int i = 0; i < arraySize; i++)
+        for(int i = 0; i < size; i++)
         {
-            System.out.print(hashArray[i] + " ");
+            System.out.print(hashArray[i]);
         }
         System.out.println();
     }
-
     public static void main(String[] args) {
-        IHashTable arrayTab = new IHashTable(10);
-        arrayTab.insert(8);
-        arrayTab.insert(4);
-        arrayTab.insert(1);
-        arrayTab.insert(2);
-        arrayTab.insert(5);
-        arrayTab.insert(11);
-        arrayTab.insert(76);
-        arrayTab.insert(88);
-        arrayTab.insert(14);
-        arrayTab.insert(55);
-        arrayTab.print();
-        arrayTab.delete(14);
-        arrayTab.print();
+        HashArray es = new HashArray(7);
+        es.insert(7);
+        es.insert(4);
+        es.insert(1);
+        es.insert(2);
+        es.insert(14);
+        es.insert(33);
+        es.print();
+        System.out.println(es.find(44));
+        System.out.println(es.find(33));
     }
 }
